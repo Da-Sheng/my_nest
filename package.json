@@ -1,0 +1,22 @@
+{
+  "name": "yd-ai-bff",
+  "version": "1.0.0",
+  "main": "dist/app.js",
+  "scripts": {
+    "start": "nest start",
+    "build": "sh build.sh",
+    "deploy": "sh deploy.sh",
+    "build:rollup": "rollup -c rollup.config.js"
+  },
+  "dependencies": {
+    "@nestjs/common": "^10.0.0",
+    "@nestjs/core": "^10.0.0",
+    "aws-lambda": "^1.0.7"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^10.0.0",
+    "rollup": "^3.0.0",
+    "rollup-plugin-typescript2": "^0.34.0",
+    "typescript": "^5.0.0"
+  }
+} 
