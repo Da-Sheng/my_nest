@@ -1,10 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './config/app.module';
 import { Logger } from '@nestjs/common';
-import * as dotenv from 'dotenv';
 
-// 加载环境变量
-dotenv.config();
+// 环境变量现在由 @nestjs/config 管理，无需手动加载
 
 const logger = new Logger('Bootstrap');
 

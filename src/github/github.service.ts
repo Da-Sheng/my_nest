@@ -2,13 +2,17 @@ import { Injectable, Logger } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { GitHubRepo, ApiResponse } from '../../types';
+import { ConfigService } from '../config/config.service';
 
 @Injectable()
 export class GitHubService {
   private readonly logger = new Logger(GitHubService.name);
   private readonly githubApiUrl = 'https://api.github.com';
 
-  constructor(private readonly httpService: HttpService) {}
+  constructor(
+    private readonly httpService: HttpService,
+    private readonly configService: ConfigService,
+  ) {}
 
   async getUserRepositories(username: string): Promise<ApiResponse<GitHubRepo[]>> {
     try {
@@ -24,8 +28,8 @@ export class GitHubService {
           headers: {
             'Accept': 'application/vnd.github.v3+json',
             'User-Agent': 'Blog-Backend-Service',
-            ...(process.env.GITHUB_TOKEN && {
-              'Authorization': `token ${process.env.GITHUB_TOKEN}`,
+            ...(this.configService.githubToken && {
+              'Authorization': `token ${this.configService.githubToken}`,
             }),
           },
         }),
@@ -94,8 +98,8 @@ export class GitHubService {
           headers: {
             'Accept': 'application/vnd.github.v3+json',
             'User-Agent': 'Blog-Backend-Service',
-            ...(process.env.GITHUB_TOKEN && {
-              'Authorization': `token ${process.env.GITHUB_TOKEN}`,
+            ...(this.configService.githubToken && {
+              'Authorization': `token ${this.configService.githubToken}`,
             }),
           },
         }),
