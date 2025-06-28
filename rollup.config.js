@@ -1,12 +1,12 @@
 import typescript from 'rollup-plugin-typescript2';
 
 export default {
-  input: 'app.ts',
+  input: 'main.ts',
   entry: {
     lambda: './lambda.ts',
   },
   output: {
-    file: 'dist/app.js',
+    file: 'dist/main.js',
     format: 'cjs'
   },
   plugins: [typescript()],

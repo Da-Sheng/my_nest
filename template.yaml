@@ -5,8 +5,8 @@ Resources:
   NestLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: dist/app.handler
-      Runtime: nodejs18.x
+      Handler: dist/lambda.handler
+      Runtime: nodejs22.x
       CodeUri: .
       Layers:
         - !Ref NodeModulesLayer
@@ -23,4 +23,4 @@ Resources:
       Description: Node.js modules layer
       ContentUri: layer/nodejs
       CompatibleRuntimes:
-        - nodejs18.x 
+        - nodejs22.x 

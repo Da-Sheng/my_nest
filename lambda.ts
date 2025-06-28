@@ -1,5 +1,5 @@
 import serverless from 'serverless-http';
-import { createNestApp } from './app';
+import { createNestApp } from './main';
 
 let cachedServer: any;
 
@@ -14,4 +14,4 @@ const bootstrapServer = async () => {
 export const handler = async (event: any, context: any) => {
   const server = await bootstrapServer();
   return server(event, context);
-}; 
+};
