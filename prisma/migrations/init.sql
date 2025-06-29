@@ -37,11 +37,11 @@ BEGIN
     ('clm_tag_aws', 'AWS', 'aws')
     ON CONFLICT (slug) DO NOTHING;
 
-    -- 插入示例博客文章
+    -- 插入示例博客文章 (修正字段命名为下划线格式)
     INSERT INTO blog_posts (
         id, slug, title, excerpt, content,
-        "authorName", "authorAvatar", "authorBio",
-        tags, category, "readingTime", featured, "coverImage"
+        author_name, author_avatar, author_bio,
+        tags, category, reading_time, featured, cover_image
     ) VALUES
     (
         'clm_post_nextjs_guide',
@@ -81,9 +81,75 @@ npm run dev
         12,
         true,
         '/api/images/nextjs-cover.jpg'
+    ),
+    (
+        'clm_post_tailwind_guide',
+        'tailwind-css-mastery',
+        'Tailwind CSS 实战：构建美观的现代UI',
+        '从基础到高级，全面掌握Tailwind CSS的使用技巧，快速构建响应式和美观的用户界面。',
+        '# Tailwind CSS 实战指南
+
+Tailwind CSS 是一个功能优先的CSS框架，让UI开发变得更加高效。
+
+## 核心优势
+
+### 1. 实用工具优先
+- 小巧的原子类
+- 高度可定制
+- 无需编写自定义CSS
+
+### 2. 响应式设计
+- 移动优先策略
+- 灵活的断点系统
+- 简单的语法
+
+## 实战示例
+
+```html
+<div class="bg-white p-6 rounded-lg shadow-lg">
+  <h3 class="text-xl font-bold mb-4">卡片标题</h3>
+  <p class="text-gray-600">描述内容</p>
+</div>
+```
+
+让我们用Tailwind构建精美的界面！',
+        'UI设计师',
+        '/api/avatar/designer.png',
+        '专注于用户体验和界面设计的设计师',
+        ARRAY['Tailwind CSS', 'CSS', 'UI设计'],
+        '前端技术',
+        8,
+        false,
+        '/api/images/tailwind-cover.jpg'
     )
     ON CONFLICT (slug) DO NOTHING;
 
     RAISE NOTICE '初始数据插入完成';
 END;
-$$ LANGUAGE plpgsql; 
+$$ LANGUAGE plpgsql;
+
+-- 执行数据插入
+SELECT insert_initial_data();
+
+-- 验证数据插入结果
+SELECT 
+    'blog_posts' as table_name, 
+    COUNT(*) as record_count,
+    'Posts created' as status
+FROM blog_posts
+UNION ALL
+SELECT 
+    'blog_categories' as table_name, 
+    COUNT(*) as record_count,
+    'Categories created' as status  
+FROM blog_categories
+UNION ALL
+SELECT 
+    'blog_tags' as table_name, 
+    COUNT(*) as record_count,
+    'Tags created' as status
+FROM blog_tags
+ORDER BY table_name;
+
+-- 显示成功消息
+SELECT '🎉 RDS数据库迁移完成！' as message; 
