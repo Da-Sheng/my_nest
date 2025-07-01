@@ -7,4 +7,9 @@
 # 其他常规忽略
 node_modules/
 logs/
-dist/ 
+dist/
+build/
+
+# Lambda Layer构建产物
+layer/nodejs/node_modules/
+layer/nodejs/package-lock.json 

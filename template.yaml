@@ -7,7 +7,7 @@ Resources:
     Properties:
       Handler: dist/lambda.handler
       Runtime: nodejs22.x
-      CodeUri: .
+      CodeUri: dist
       Layers:
         - !Ref NodeModulesLayer
       Events:

@@ -1,14 +1,34 @@
 import typescript from 'rollup-plugin-typescript2';
 
+// Layer中的依赖，构建时排除
+const layerDependencies = [
+  '@nestjs/common',
+  '@nestjs/core', 
+  '@nestjs/platform-express',
+  '@nestjs/config',
+  '@nestjs/axios',
+  '@prisma/client',
+  'axios',
+  'rxjs',
+  'dotenv',
+  'serverless-http'
+];
+
 export default {
-  input: 'main.ts',
-  entry: {
-    lambda: './lambda.ts',
-  },
+  input: 'lambda.ts',
   output: {
-    file: 'dist/main.js',
+    file: 'dist/lambda.js',
     format: 'cjs'
   },
-  plugins: [typescript()],
-  external: ['aws-lambda', '@nestjs/common', '@nestjs/core']
+  plugins: [
+    typescript({
+      check: false
+    })
+  ],
+  external: [
+    'aws-lambda',
+    ...layerDependencies,
+    // 其他Node.js内置模块
+    'fs', 'path', 'crypto', 'http', 'https', 'url'
+  ]
 }; 

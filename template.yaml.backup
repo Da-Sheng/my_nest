@@ -1,0 +1,26 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: NestJS Lambda with Layer
+Resources:
+  NestLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: dist/lambda.handler
+      Runtime: nodejs22.x
+      CodeUri: .
+      Layers:
+        - !Ref NodeModulesLayer
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: ANY
+  NodeModulesLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: node-modules
+      Description: Node.js modules layer
+      ContentUri: layer/nodejs
+      CompatibleRuntimes:
+        - nodejs22.x 
